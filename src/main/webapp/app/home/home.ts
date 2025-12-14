@@ -22,6 +22,8 @@ export default class Home implements OnInit, OnDestroy {
   private readonly accountService = inject(AccountService);
   private readonly router = inject(Router);
 
+  currentDate = new Date();
+
   ngOnInit(): void {
     this.accountService
       .getAuthenticationState()
