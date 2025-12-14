@@ -1,0 +1,72 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (cdmsSubmission(); as cdmsSubmissionRef) {
+      <div>
+        <h2 data-cy="cdmsSubmissionDetailsHeading">
+          <span jhiTranslate="fgrKnowYourCustomerApp.cdmsSubmission.detail.title">Cdms Submission</span>
+        </h2>
+
+        <hr />
+
+        <jhi-alert-error />
+
+        <jhi-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ cdmsSubmissionRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.cdmsSubmission.submissionRef">Submission Ref</span></dt>
+          <dd>
+            <span>{{ cdmsSubmissionRef.submissionRef }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.cdmsSubmission.status">Status</span></dt>
+          <dd>
+            <span [jhiTranslate]="'fgrKnowYourCustomerApp.SubmissionStatus.' + (cdmsSubmissionRef.status ?? 'null')">{{
+              { null: '', PENDING: 'PENDING', SUCCESS: 'SUCCESS', FAILED: 'FAILED', RETRYING: 'RETRYING' }[
+                cdmsSubmissionRef.status ?? 'null'
+              ]
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.cdmsSubmission.responseCode">Response Code</span></dt>
+          <dd>
+            <span>{{ cdmsSubmissionRef.responseCode }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.cdmsSubmission.responseMessage">Response Message</span></dt>
+          <dd>
+            <span>{{ cdmsSubmissionRef.responseMessage }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.cdmsSubmission.attempts">Attempts</span></dt>
+          <dd>
+            <span>{{ cdmsSubmissionRef.attempts }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.cdmsSubmission.submittedAt">Submitted At</span></dt>
+          <dd>
+            <span>{{ cdmsSubmissionRef.submittedAt | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.cdmsSubmission.lastAttemptAt">Last Attempt At</span></dt>
+          <dd>
+            <span>{{ cdmsSubmissionRef.lastAttemptAt | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.cdmsSubmission.nextRetryAt">Next Retry At</span></dt>
+          <dd>
+            <span>{{ cdmsSubmissionRef.nextRetryAt | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.cdmsSubmission.cdmsCustomerId">Cdms Customer Id</span></dt>
+          <dd>
+            <span>{{ cdmsSubmissionRef.cdmsCustomerId }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/cdms-submission', cdmsSubmissionRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

@@ -50,6 +50,17 @@ public class CacheConfiguration {
             createCache(cm, zw.co.fgr.domain.User.class.getName());
             createCache(cm, zw.co.fgr.domain.Authority.class.getName());
             createCache(cm, zw.co.fgr.domain.User.class.getName() + ".authorities");
+            createCache(cm, zw.co.fgr.domain.Customer.class.getName());
+            createCache(cm, zw.co.fgr.domain.Customer.class.getName() + ".customerIdentifiers");
+            createCache(cm, zw.co.fgr.domain.Customer.class.getName() + ".kycCases");
+            createCache(cm, zw.co.fgr.domain.CustomerIdentifier.class.getName());
+            createCache(cm, zw.co.fgr.domain.KycCase.class.getName());
+            createCache(cm, zw.co.fgr.domain.KycCase.class.getName() + ".kycDocuments");
+            createCache(cm, zw.co.fgr.domain.KycCase.class.getName() + ".kycNotifications");
+            createCache(cm, zw.co.fgr.domain.KycConsent.class.getName());
+            createCache(cm, zw.co.fgr.domain.KycDocument.class.getName());
+            createCache(cm, zw.co.fgr.domain.CdmsSubmission.class.getName());
+            createCache(cm, zw.co.fgr.domain.KycNotification.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

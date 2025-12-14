@@ -1,0 +1,11 @@
+{
+  "fgrKnowYourCustomerApp": {
+    "SubmissionStatus": {
+      "null": "",
+      "PENDING": "PENDING",
+      "SUCCESS": "SUCCESS",
+      "FAILED": "FAILED",
+      "RETRYING": "RETRYING"
+    }
+  }
+}

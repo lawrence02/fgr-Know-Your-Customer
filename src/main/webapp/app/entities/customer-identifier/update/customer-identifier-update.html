@@ -1,0 +1,196 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-customer-identifier-heading"
+        data-cy="CustomerIdentifierCreateUpdateHeading"
+        jhiTranslate="fgrKnowYourCustomerApp.customerIdentifier.home.createOrEditLabel"
+      >
+        Create or edit a Customer Identifier
+      </h2>
+
+      <div>
+        <jhi-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" jhiTranslate="fgrKnowYourCustomerApp.customerIdentifier.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let identifierTypeRef = editForm.get('identifierType')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_identifierType" jhiTranslate="fgrKnowYourCustomerApp.customerIdentifier.identifierType"
+            >Identifier Type</label
+          >
+          <select
+            class="form-control"
+            name="identifierType"
+            formControlName="identifierType"
+            id="field_identifierType"
+            data-cy="identifierType"
+          >
+            <option [ngValue]="null">{{ 'fgrKnowYourCustomerApp.IdentifierType.null' | translate }}</option>
+            @for (identifierType of identifierTypeValues; track $index) {
+              <option [value]="identifierType">{{ 'fgrKnowYourCustomerApp.IdentifierType.' + identifierType | translate }}</option>
+            }
+          </select>
+          @if (identifierTypeRef.invalid && (identifierTypeRef.dirty || identifierTypeRef.touched)) {
+            <div>
+              @if (editForm.get('identifierType')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let identifierValueRef = editForm.get('identifierValue')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_identifierValue" jhiTranslate="fgrKnowYourCustomerApp.customerIdentifier.identifierValue"
+            >Identifier Value</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="identifierValue"
+            id="field_identifierValue"
+            data-cy="identifierValue"
+            formControlName="identifierValue"
+          />
+          @if (identifierValueRef.invalid && (identifierValueRef.dirty || identifierValueRef.touched)) {
+            <div>
+              @if (editForm.get('identifierValue')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              @if (editForm.get('identifierValue')?.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '255' }"
+                  >This field cannot be longer than 255 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let channelRef = editForm.get('channel')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_channel" jhiTranslate="fgrKnowYourCustomerApp.customerIdentifier.channel">Channel</label>
+          <select class="form-control" name="channel" formControlName="channel" id="field_channel" data-cy="channel">
+            <option [ngValue]="null">{{ 'fgrKnowYourCustomerApp.ChannelType.null' | translate }}</option>
+            @for (channelType of channelTypeValues; track $index) {
+              <option [value]="channelType">{{ 'fgrKnowYourCustomerApp.ChannelType.' + channelType | translate }}</option>
+            }
+          </select>
+          @if (channelRef.invalid && (channelRef.dirty || channelRef.touched)) {
+            <div>
+              @if (editForm.get('channel')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let verifiedRef = editForm.get('verified')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_verified" jhiTranslate="fgrKnowYourCustomerApp.customerIdentifier.verified">Verified</label>
+          <input type="checkbox" class="form-check" name="verified" id="field_verified" data-cy="verified" formControlName="verified" />
+          @if (verifiedRef.invalid && (verifiedRef.dirty || verifiedRef.touched)) {
+            <div>
+              @if (editForm.get('verified')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_isPrimary" jhiTranslate="fgrKnowYourCustomerApp.customerIdentifier.isPrimary"
+            >Is Primary</label
+          >
+          <input type="checkbox" class="form-check" name="isPrimary" id="field_isPrimary" data-cy="isPrimary" formControlName="isPrimary" />
+        </div>
+
+        @let createdAtRef = editForm.get('createdAt')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_createdAt" jhiTranslate="fgrKnowYourCustomerApp.customerIdentifier.createdAt"
+            >Created At</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_createdAt"
+              data-cy="createdAt"
+              type="datetime-local"
+              class="form-control"
+              name="createdAt"
+              formControlName="createdAt"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (createdAtRef.invalid && (createdAtRef.dirty || createdAtRef.touched)) {
+            <div>
+              @if (editForm.get('createdAt')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('createdAt')?.errors?.datetimelocal"
+                jhiTranslate="entity.validation.datetimelocal"
+                >This field should be a date and time.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_verifiedAt" jhiTranslate="fgrKnowYourCustomerApp.customerIdentifier.verifiedAt"
+            >Verified At</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_verifiedAt"
+              data-cy="verifiedAt"
+              type="datetime-local"
+              class="form-control"
+              name="verifiedAt"
+              formControlName="verifiedAt"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_customer" jhiTranslate="fgrKnowYourCustomerApp.customerIdentifier.customer">Customer</label>
+          <select
+            class="form-control"
+            id="field_customer"
+            data-cy="customer"
+            name="customer"
+            formControlName="customer"
+            [compareWith]="compareCustomer"
+          >
+            <option [ngValue]="null"></option>
+            @for (customerOption of customersSharedCollection(); track $index) {
+              <option [ngValue]="customerOption">{{ customerOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

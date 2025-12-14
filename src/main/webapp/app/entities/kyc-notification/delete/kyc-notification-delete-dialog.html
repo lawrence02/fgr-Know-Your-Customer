@@ -1,0 +1,28 @@
+@if (kycNotification) {
+  <form name="deleteForm" (ngSubmit)="confirmDelete(kycNotification.id!)">
+    <div class="modal-header">
+      <h4 class="modal-title" data-cy="kycNotificationDeleteDialogHeading" jhiTranslate="entity.delete.title">Confirm delete operation</h4>
+    </div>
+
+    <div class="modal-body">
+      <jhi-alert-error />
+      <p
+        id="jhi-delete-kycNotification-heading"
+        jhiTranslate="fgrKnowYourCustomerApp.kycNotification.delete.question"
+        [translateValues]="{ id: kycNotification.id }"
+      >
+        Are you sure you want to delete Kyc Notification {{ kycNotification.id }}?
+      </p>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">
+        <fa-icon icon="ban" />&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+      </button>
+
+      <button id="jhi-confirm-delete-kycNotification" data-cy="entityConfirmDeleteButton" type="submit" class="btn btn-danger">
+        <fa-icon icon="times" />&nbsp;<span jhiTranslate="entity.action.delete">Delete</span>
+      </button>
+    </div>
+  </form>
+}

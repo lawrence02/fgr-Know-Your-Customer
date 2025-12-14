@@ -1,0 +1,58 @@
+{
+  "annotations": {
+    "changelogDate": "20251214103012"
+  },
+  "applications": ["*"],
+  "documentation": "Customer identifiers across different channels",
+  "fields": [
+    {
+      "fieldName": "identifierType",
+      "fieldType": "IdentifierType",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "PHONE_NUMBER,EMAIL,USERNAME,NATIONAL_ID,PASSPORT,COMPANY_REGISTRATION"
+    },
+    {
+      "fieldName": "identifierValue",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "255"
+    },
+    {
+      "fieldName": "channel",
+      "fieldType": "ChannelType",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "WHATSAPP,WEB,ANDROID,IOS,USSD"
+    },
+    {
+      "fieldName": "verified",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "isPrimary",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "createdAt",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "verifiedAt",
+      "fieldType": "Instant"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "CustomerIdentifier",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "customer",
+      "relationshipName": "customer",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

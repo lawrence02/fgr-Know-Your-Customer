@@ -1,0 +1,183 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-kyc-consent-heading"
+        data-cy="KycConsentCreateUpdateHeading"
+        jhiTranslate="fgrKnowYourCustomerApp.kycConsent.home.createOrEditLabel"
+      >
+        Create or edit a Kyc Consent
+      </h2>
+
+      <div>
+        <jhi-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" jhiTranslate="fgrKnowYourCustomerApp.kycConsent.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let consentTextRef = editForm.get('consentText')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_consentText" jhiTranslate="fgrKnowYourCustomerApp.kycConsent.consentText"
+            >Consent Text</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="consentText"
+            id="field_consentText"
+            data-cy="consentText"
+            formControlName="consentText"
+          />
+          @if (consentTextRef.invalid && (consentTextRef.dirty || consentTextRef.touched)) {
+            <div>
+              @if (editForm.get('consentText')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              @if (editForm.get('consentText')?.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '2000' }"
+                  >This field cannot be longer than 2000 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let consentedRef = editForm.get('consented')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_consented" jhiTranslate="fgrKnowYourCustomerApp.kycConsent.consented">Consented</label>
+          <input type="checkbox" class="form-check" name="consented" id="field_consented" data-cy="consented" formControlName="consented" />
+          @if (consentedRef.invalid && (consentedRef.dirty || consentedRef.touched)) {
+            <div>
+              @if (editForm.get('consented')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let consentedAtRef = editForm.get('consentedAt')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_consentedAt" jhiTranslate="fgrKnowYourCustomerApp.kycConsent.consentedAt"
+            >Consented At</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_consentedAt"
+              data-cy="consentedAt"
+              type="datetime-local"
+              class="form-control"
+              name="consentedAt"
+              formControlName="consentedAt"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (consentedAtRef.invalid && (consentedAtRef.dirty || consentedAtRef.touched)) {
+            <div>
+              @if (editForm.get('consentedAt')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('consentedAt')?.errors?.datetimelocal"
+                jhiTranslate="entity.validation.datetimelocal"
+                >This field should be a date and time.</small
+              >
+            </div>
+          }
+        </div>
+
+        @let channelRef = editForm.get('channel')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_channel" jhiTranslate="fgrKnowYourCustomerApp.kycConsent.channel">Channel</label>
+          <select class="form-control" name="channel" formControlName="channel" id="field_channel" data-cy="channel">
+            <option [ngValue]="null">{{ 'fgrKnowYourCustomerApp.ChannelType.null' | translate }}</option>
+            @for (channelType of channelTypeValues; track $index) {
+              <option [value]="channelType">{{ 'fgrKnowYourCustomerApp.ChannelType.' + channelType | translate }}</option>
+            }
+          </select>
+          @if (channelRef.invalid && (channelRef.dirty || channelRef.touched)) {
+            <div>
+              @if (editForm.get('channel')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let ipAddressRef = editForm.get('ipAddress')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_ipAddress" jhiTranslate="fgrKnowYourCustomerApp.kycConsent.ipAddress">Ip Address</label>
+          <input type="text" class="form-control" name="ipAddress" id="field_ipAddress" data-cy="ipAddress" formControlName="ipAddress" />
+          @if (ipAddressRef.invalid && (ipAddressRef.dirty || ipAddressRef.touched)) {
+            <div>
+              @if (editForm.get('ipAddress')?.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '45' }"
+                  >This field cannot be longer than 45 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let userAgentRef = editForm.get('userAgent')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_userAgent" jhiTranslate="fgrKnowYourCustomerApp.kycConsent.userAgent">User Agent</label>
+          <input type="text" class="form-control" name="userAgent" id="field_userAgent" data-cy="userAgent" formControlName="userAgent" />
+          @if (userAgentRef.invalid && (userAgentRef.dirty || userAgentRef.touched)) {
+            <div>
+              @if (editForm.get('userAgent')?.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '500' }"
+                  >This field cannot be longer than 500 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let consentVersionRef = editForm.get('consentVersion')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_consentVersion" jhiTranslate="fgrKnowYourCustomerApp.kycConsent.consentVersion"
+            >Consent Version</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="consentVersion"
+            id="field_consentVersion"
+            data-cy="consentVersion"
+            formControlName="consentVersion"
+          />
+          @if (consentVersionRef.invalid && (consentVersionRef.dirty || consentVersionRef.touched)) {
+            <div>
+              @if (editForm.get('consentVersion')?.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '10' }"
+                  >This field cannot be longer than 10 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

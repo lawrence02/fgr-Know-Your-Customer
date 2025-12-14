@@ -1,0 +1,35 @@
+{
+  "fgrKnowYourCustomerApp": {
+    "customer": {
+      "home": {
+        "title": "Customers",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Customer",
+        "createOrEditLabel": "Create or edit a Customer",
+        "notFound": "No Customers found"
+      },
+      "created": "A new Customer is created with identifier {{ param }}",
+      "updated": "A Customer is updated with identifier {{ param }}",
+      "deleted": "A Customer is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Customer {{ id }}?"
+      },
+      "detail": {
+        "title": "Customer"
+      },
+      "id": "ID",
+      "customerRef": "Customer Ref",
+      "customerType": "Customer Type",
+      "fullName": "Full Name",
+      "dateOfBirth": "Date Of Birth",
+      "idNumber": "Id Number",
+      "registrationNumber": "Registration Number",
+      "address": "Address",
+      "phoneNumber": "Phone Number",
+      "createdAt": "Created At",
+      "updatedAt": "Updated At",
+      "customerIdentifier": "Customer Identifier",
+      "kycCase": "Kyc Case"
+    }
+  }
+}

@@ -1,0 +1,177 @@
+<div>
+  <h2 id="page-heading" data-cy="KycNotificationHeading">
+    <span jhiTranslate="fgrKnowYourCustomerApp.kycNotification.home.title">Kyc Notifications</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined" />
+        <span jhiTranslate="fgrKnowYourCustomerApp.kycNotification.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-kyc-notification"
+        [routerLink]="['/kyc-notification/new']"
+      >
+        <fa-icon icon="plus" />
+        <span jhiTranslate="fgrKnowYourCustomerApp.kycNotification.home.createLabel">Create a new Kyc Notification</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error />
+
+  <jhi-alert />
+
+  @if (kycNotifications().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="fgrKnowYourCustomerApp.kycNotification.home.notFound">No Kyc Notifications found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="notificationType">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.kycNotification.notificationType">Notification Type</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="message">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.kycNotification.message">Message</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="sentAt">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.kycNotification.sentAt">Sent At</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="delivered">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.kycNotification.delivered">Delivered</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="deliveredAt">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.kycNotification.deliveredAt">Delivered At</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="errorMessage">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.kycNotification.errorMessage">Error Message</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="kycCase.id">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.kycNotification.kycCase">Kyc Case</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (kycNotification of kycNotifications(); track trackId(kycNotification)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/kyc-notification', kycNotification.id, 'view']">{{ kycNotification.id }}</a>
+              </td>
+              <td [jhiTranslate]="'fgrKnowYourCustomerApp.NotificationType.' + (kycNotification.notificationType ?? 'null')">
+                {{
+                  {
+                    null: '',
+                    WELCOME: 'WELCOME',
+                    DOCUMENT_RECEIVED: 'DOCUMENT_RECEIVED',
+                    SUBMISSION_SUCCESS: 'SUBMISSION_SUCCESS',
+                    SUBMISSION_FAILED: 'SUBMISSION_FAILED',
+                    VALIDATION_ERROR: 'VALIDATION_ERROR',
+                    TIMEOUT_WARNING: 'TIMEOUT_WARNING',
+                    HELP_REQUEST: 'HELP_REQUEST',
+                  }[kycNotification.notificationType ?? 'null']
+                }}
+              </td>
+              <td>{{ kycNotification.message }}</td>
+              <td>{{ kycNotification.sentAt | formatMediumDatetime }}</td>
+              <td>{{ kycNotification.delivered }}</td>
+              <td>{{ kycNotification.deliveredAt | formatMediumDatetime }}</td>
+              <td>{{ kycNotification.errorMessage }}</td>
+              <td>
+                @if (kycNotification.kycCase) {
+                  <div>
+                    <a [routerLink]="['/kyc-case', kycNotification.kycCase.id, 'view']">{{ kycNotification.kycCase.id }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a
+                    [routerLink]="['/kyc-notification', kycNotification.id, 'view']"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a
+                    [routerLink]="['/kyc-notification', kycNotification.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(kycNotification)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (kycNotifications().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <jhi-item-count [params]="{ page, totalItems, itemsPerPage }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        />
+      </div>
+    </div>
+  }
+</div>

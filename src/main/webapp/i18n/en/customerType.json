@@ -1,0 +1,9 @@
+{
+  "fgrKnowYourCustomerApp": {
+    "CustomerType": {
+      "null": "",
+      "INDIVIDUAL": "INDIVIDUAL",
+      "COMPANY": "COMPANY"
+    }
+  }
+}

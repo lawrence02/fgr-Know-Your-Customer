@@ -1,0 +1,60 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (kycConsent(); as kycConsentRef) {
+      <div>
+        <h2 data-cy="kycConsentDetailsHeading"><span jhiTranslate="fgrKnowYourCustomerApp.kycConsent.detail.title">Kyc Consent</span></h2>
+
+        <hr />
+
+        <jhi-alert-error />
+
+        <jhi-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ kycConsentRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.kycConsent.consentText">Consent Text</span></dt>
+          <dd>
+            <span>{{ kycConsentRef.consentText }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.kycConsent.consented">Consented</span></dt>
+          <dd>
+            <span>{{ kycConsentRef.consented }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.kycConsent.consentedAt">Consented At</span></dt>
+          <dd>
+            <span>{{ kycConsentRef.consentedAt | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.kycConsent.channel">Channel</span></dt>
+          <dd>
+            <span [jhiTranslate]="'fgrKnowYourCustomerApp.ChannelType.' + (kycConsentRef.channel ?? 'null')">{{
+              { null: '', WHATSAPP: 'WHATSAPP', WEB: 'WEB', ANDROID: 'ANDROID', IOS: 'IOS', USSD: 'USSD' }[kycConsentRef.channel ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.kycConsent.ipAddress">Ip Address</span></dt>
+          <dd>
+            <span>{{ kycConsentRef.ipAddress }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.kycConsent.userAgent">User Agent</span></dt>
+          <dd>
+            <span>{{ kycConsentRef.userAgent }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.kycConsent.consentVersion">Consent Version</span></dt>
+          <dd>
+            <span>{{ kycConsentRef.consentVersion }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/kyc-consent', kycConsentRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

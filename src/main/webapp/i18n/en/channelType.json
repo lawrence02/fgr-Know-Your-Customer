@@ -1,0 +1,12 @@
+{
+  "fgrKnowYourCustomerApp": {
+    "ChannelType": {
+      "null": "",
+      "WHATSAPP": "WHATSAPP",
+      "WEB": "WEB",
+      "ANDROID": "ANDROID",
+      "IOS": "IOS",
+      "USSD": "USSD"
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "fgrKnowYourCustomerApp": {
+    "kycConsent": {
+      "home": {
+        "title": "Kyc Consents",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Kyc Consent",
+        "createOrEditLabel": "Create or edit a Kyc Consent",
+        "notFound": "No Kyc Consents found"
+      },
+      "created": "A new Kyc Consent is created with identifier {{ param }}",
+      "updated": "A Kyc Consent is updated with identifier {{ param }}",
+      "deleted": "A Kyc Consent is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Kyc Consent {{ id }}?"
+      },
+      "detail": {
+        "title": "Kyc Consent"
+      },
+      "id": "ID",
+      "consentText": "Consent Text",
+      "consented": "Consented",
+      "consentedAt": "Consented At",
+      "channel": "Channel",
+      "ipAddress": "Ip Address",
+      "userAgent": "User Agent",
+      "consentVersion": "Consent Version",
+      "kycCase": "Kyc Case"
+    }
+  }
+}

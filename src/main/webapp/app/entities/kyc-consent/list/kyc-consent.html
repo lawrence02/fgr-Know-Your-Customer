@@ -1,0 +1,136 @@
+<div>
+  <h2 id="page-heading" data-cy="KycConsentHeading">
+    <span jhiTranslate="fgrKnowYourCustomerApp.kycConsent.home.title">Kyc Consents</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined" />
+        <span jhiTranslate="fgrKnowYourCustomerApp.kycConsent.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-kyc-consent"
+        [routerLink]="['/kyc-consent/new']"
+      >
+        <fa-icon icon="plus" />
+        <span jhiTranslate="fgrKnowYourCustomerApp.kycConsent.home.createLabel">Create a new Kyc Consent</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error />
+
+  <jhi-alert />
+
+  @if (kycConsents().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="fgrKnowYourCustomerApp.kycConsent.home.notFound">No Kyc Consents found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="consentText">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.kycConsent.consentText">Consent Text</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="consented">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.kycConsent.consented">Consented</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="consentedAt">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.kycConsent.consentedAt">Consented At</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="channel">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.kycConsent.channel">Channel</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="ipAddress">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.kycConsent.ipAddress">Ip Address</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="userAgent">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.kycConsent.userAgent">User Agent</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="consentVersion">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.kycConsent.consentVersion">Consent Version</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (kycConsent of kycConsents(); track trackId(kycConsent)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/kyc-consent', kycConsent.id, 'view']">{{ kycConsent.id }}</a>
+              </td>
+              <td>{{ kycConsent.consentText }}</td>
+              <td>{{ kycConsent.consented }}</td>
+              <td>{{ kycConsent.consentedAt | formatMediumDatetime }}</td>
+              <td [jhiTranslate]="'fgrKnowYourCustomerApp.ChannelType.' + (kycConsent.channel ?? 'null')">
+                {{
+                  { null: '', WHATSAPP: 'WHATSAPP', WEB: 'WEB', ANDROID: 'ANDROID', IOS: 'IOS', USSD: 'USSD' }[kycConsent.channel ?? 'null']
+                }}
+              </td>
+              <td>{{ kycConsent.ipAddress }}</td>
+              <td>{{ kycConsent.userAgent }}</td>
+              <td>{{ kycConsent.consentVersion }}</td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/kyc-consent', kycConsent.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/kyc-consent', kycConsent.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(kycConsent)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

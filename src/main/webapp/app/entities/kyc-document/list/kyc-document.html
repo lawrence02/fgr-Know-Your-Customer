@@ -1,0 +1,209 @@
+<div>
+  <h2 id="page-heading" data-cy="KycDocumentHeading">
+    <span jhiTranslate="fgrKnowYourCustomerApp.kycDocument.home.title">Kyc Documents</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined" />
+        <span jhiTranslate="fgrKnowYourCustomerApp.kycDocument.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-kyc-document"
+        [routerLink]="['/kyc-document/new']"
+      >
+        <fa-icon icon="plus" />
+        <span jhiTranslate="fgrKnowYourCustomerApp.kycDocument.home.createLabel">Create a new Kyc Document</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error />
+
+  <jhi-alert />
+
+  @if (kycDocuments().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="fgrKnowYourCustomerApp.kycDocument.home.notFound">No Kyc Documents found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="documentType">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.kycDocument.documentType">Document Type</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="fileName">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.kycDocument.fileName">File Name</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="mimeType">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.kycDocument.mimeType">Mime Type</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="storagePath">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.kycDocument.storagePath">Storage Path</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="fileSize">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.kycDocument.fileSize">File Size</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="uploadedAt">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.kycDocument.uploadedAt">Uploaded At</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="expiresAt">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.kycDocument.expiresAt">Expires At</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="deleted">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.kycDocument.deleted">Deleted</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="deletedAt">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.kycDocument.deletedAt">Deleted At</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="metadata">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.kycDocument.metadata">Metadata</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="checksum">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.kycDocument.checksum">Checksum</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="kycCase.id">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.kycDocument.kycCase">Kyc Case</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (kycDocument of kycDocuments(); track trackId(kycDocument)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/kyc-document', kycDocument.id, 'view']">{{ kycDocument.id }}</a>
+              </td>
+              <td [jhiTranslate]="'fgrKnowYourCustomerApp.DocumentType.' + (kycDocument.documentType ?? 'null')">
+                {{
+                  {
+                    null: '',
+                    NATIONAL_ID: 'NATIONAL_ID',
+                    PASSPORT: 'PASSPORT',
+                    COMPANY_REGISTRATION: 'COMPANY_REGISTRATION',
+                    MINE_LICENSE: 'MINE_LICENSE',
+                    PROOF_OF_ADDRESS: 'PROOF_OF_ADDRESS',
+                    SELFIE: 'SELFIE',
+                    OTHER: 'OTHER',
+                  }[kycDocument.documentType ?? 'null']
+                }}
+              </td>
+              <td>{{ kycDocument.fileName }}</td>
+              <td>{{ kycDocument.mimeType }}</td>
+              <td>{{ kycDocument.storagePath }}</td>
+              <td>{{ kycDocument.fileSize }}</td>
+              <td>{{ kycDocument.uploadedAt | formatMediumDatetime }}</td>
+              <td>{{ kycDocument.expiresAt | formatMediumDatetime }}</td>
+              <td>{{ kycDocument.deleted }}</td>
+              <td>{{ kycDocument.deletedAt | formatMediumDatetime }}</td>
+              <td>{{ kycDocument.metadata }}</td>
+              <td>{{ kycDocument.checksum }}</td>
+              <td>
+                @if (kycDocument.kycCase) {
+                  <div>
+                    <a [routerLink]="['/kyc-case', kycDocument.kycCase.id, 'view']">{{ kycDocument.kycCase.id }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/kyc-document', kycDocument.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/kyc-document', kycDocument.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(kycDocument)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (kycDocuments().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <jhi-item-count [params]="{ page, totalItems, itemsPerPage }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        />
+      </div>
+    </div>
+  }
+</div>

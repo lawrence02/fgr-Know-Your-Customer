@@ -8,7 +8,14 @@
       "entities": {
         "main": "Entities",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)",
-        "adminAuthority": "Authority"
+        "adminAuthority": "Authority",
+        "customer": "Customer",
+        "customerIdentifier": "Customer Identifier",
+        "kycCase": "Kyc Case",
+        "kycConsent": "Kyc Consent",
+        "kycDocument": "Kyc Document",
+        "cdmsSubmission": "Cdms Submission",
+        "kycNotification": "Kyc Notification"
       },
       "account": {
         "main": "Account",

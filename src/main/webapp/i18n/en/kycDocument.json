@@ -1,0 +1,35 @@
+{
+  "fgrKnowYourCustomerApp": {
+    "kycDocument": {
+      "home": {
+        "title": "Kyc Documents",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Kyc Document",
+        "createOrEditLabel": "Create or edit a Kyc Document",
+        "notFound": "No Kyc Documents found"
+      },
+      "created": "A new Kyc Document is created with identifier {{ param }}",
+      "updated": "A Kyc Document is updated with identifier {{ param }}",
+      "deleted": "A Kyc Document is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Kyc Document {{ id }}?"
+      },
+      "detail": {
+        "title": "Kyc Document"
+      },
+      "id": "ID",
+      "documentType": "Document Type",
+      "fileName": "File Name",
+      "mimeType": "Mime Type",
+      "storagePath": "Storage Path",
+      "fileSize": "File Size",
+      "uploadedAt": "Uploaded At",
+      "expiresAt": "Expires At",
+      "deleted": "Deleted",
+      "deletedAt": "Deleted At",
+      "metadata": "Metadata",
+      "checksum": "Checksum",
+      "kycCase": "Kyc Case"
+    }
+  }
+}

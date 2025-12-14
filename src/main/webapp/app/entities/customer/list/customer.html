@@ -1,0 +1,209 @@
+<div>
+  <h2 id="page-heading" data-cy="CustomerHeading">
+    <span jhiTranslate="fgrKnowYourCustomerApp.customer.home.title">Customers</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined" />
+        <span jhiTranslate="fgrKnowYourCustomerApp.customer.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-customer"
+        [routerLink]="['/customer/new']"
+      >
+        <fa-icon icon="plus" />
+        <span jhiTranslate="fgrKnowYourCustomerApp.customer.home.createLabel">Create a new Customer</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error />
+
+  <jhi-alert />
+
+  <jhi-filter [filters]="filters" />
+
+  @if (customers().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="fgrKnowYourCustomerApp.customer.home.notFound">No Customers found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="customerRef">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.customer.customerRef">Customer Ref</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="customerType">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.customer.customerType">Customer Type</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="fullName">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.customer.fullName">Full Name</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="dateOfBirth">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.customer.dateOfBirth">Date Of Birth</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="idNumber">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.customer.idNumber">Id Number</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="registrationNumber">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.customer.registrationNumber">Registration Number</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="address">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.customer.address">Address</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="phoneNumber">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.customer.phoneNumber">Phone Number</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="createdAt">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.customer.createdAt">Created At</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="updatedAt">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.customer.updatedAt">Updated At</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (customer of customers(); track trackId(customer)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/customer', customer.id, 'view']">{{ customer.id }}</a>
+              </td>
+              <td>{{ customer.customerRef }}</td>
+              <td [jhiTranslate]="'fgrKnowYourCustomerApp.CustomerType.' + (customer.customerType ?? 'null')">
+                {{ { null: '', INDIVIDUAL: 'INDIVIDUAL', COMPANY: 'COMPANY' }[customer.customerType ?? 'null'] }}
+              </td>
+              <td>{{ customer.fullName }}</td>
+              <td>{{ customer.dateOfBirth | formatMediumDate }}</td>
+              <td>{{ customer.idNumber }}</td>
+              <td>{{ customer.registrationNumber }}</td>
+              <td>{{ customer.address }}</td>
+              <td>{{ customer.phoneNumber }}</td>
+              <td>{{ customer.createdAt | formatMediumDatetime }}</td>
+              <td>{{ customer.updatedAt | formatMediumDatetime }}</td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <button
+                    type="submit"
+                    [routerLink]="['/customer-identifier']"
+                    [queryParams]="{ 'filter[customerId.in]': customer.id }"
+                    class="btn btn-info btn-sm"
+                    data-cy="filterOtherEntityButton"
+                  >
+                    <fa-icon icon="eye" />
+                    <span
+                      class="d-none d-md-inline"
+                      jhiTranslate="entity.action.show"
+                      [translateValues]="{ otherEntity: ('fgrKnowYourCustomerApp.customer.customerIdentifier' | translate) }"
+                      >Show Customer Identifier</span
+                    >
+                  </button>
+                  <button
+                    type="submit"
+                    [routerLink]="['/kyc-case']"
+                    [queryParams]="{ 'filter[customerId.in]': customer.id }"
+                    class="btn btn-info btn-sm"
+                    data-cy="filterOtherEntityButton"
+                  >
+                    <fa-icon icon="eye" />
+                    <span
+                      class="d-none d-md-inline"
+                      jhiTranslate="entity.action.show"
+                      [translateValues]="{ otherEntity: ('fgrKnowYourCustomerApp.customer.kycCase' | translate) }"
+                      >Show Kyc Case</span
+                    >
+                  </button>
+                  <a [routerLink]="['/customer', customer.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/customer', customer.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(customer)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (customers().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <jhi-item-count [params]="{ page, totalItems, itemsPerPage }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        />
+      </div>
+    </div>
+  }
+</div>
