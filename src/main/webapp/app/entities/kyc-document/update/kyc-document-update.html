@@ -1,0 +1,243 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-kyc-document-heading"
+        data-cy="KycDocumentCreateUpdateHeading"
+        jhiTranslate="fgrKnowYourCustomerApp.kycDocument.home.createOrEditLabel"
+      >
+        Create or edit a Kyc Document
+      </h2>
+
+      <div>
+        <jhi-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" jhiTranslate="fgrKnowYourCustomerApp.kycDocument.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let documentTypeRef = editForm.get('documentType')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_documentType" jhiTranslate="fgrKnowYourCustomerApp.kycDocument.documentType"
+            >Document Type</label
+          >
+          <select class="form-control" name="documentType" formControlName="documentType" id="field_documentType" data-cy="documentType">
+            <option [ngValue]="null">{{ 'fgrKnowYourCustomerApp.DocumentType.null' | translate }}</option>
+            @for (documentType of documentTypeValues; track $index) {
+              <option [value]="documentType">{{ 'fgrKnowYourCustomerApp.DocumentType.' + documentType | translate }}</option>
+            }
+          </select>
+          @if (documentTypeRef.invalid && (documentTypeRef.dirty || documentTypeRef.touched)) {
+            <div>
+              @if (editForm.get('documentType')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let fileNameRef = editForm.get('fileName')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_fileName" jhiTranslate="fgrKnowYourCustomerApp.kycDocument.fileName">File Name</label>
+          <input type="text" class="form-control" name="fileName" id="field_fileName" data-cy="fileName" formControlName="fileName" />
+          @if (fileNameRef.invalid && (fileNameRef.dirty || fileNameRef.touched)) {
+            <div>
+              @if (editForm.get('fileName')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              @if (editForm.get('fileName')?.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '255' }"
+                  >This field cannot be longer than 255 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let mimeTypeRef = editForm.get('mimeType')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_mimeType" jhiTranslate="fgrKnowYourCustomerApp.kycDocument.mimeType">Mime Type</label>
+          <input type="text" class="form-control" name="mimeType" id="field_mimeType" data-cy="mimeType" formControlName="mimeType" />
+          @if (mimeTypeRef.invalid && (mimeTypeRef.dirty || mimeTypeRef.touched)) {
+            <div>
+              @if (editForm.get('mimeType')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              @if (editForm.get('mimeType')?.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '100' }"
+                  >This field cannot be longer than 100 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let storagePathRef = editForm.get('storagePath')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_storagePath" jhiTranslate="fgrKnowYourCustomerApp.kycDocument.storagePath"
+            >Storage Path</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="storagePath"
+            id="field_storagePath"
+            data-cy="storagePath"
+            formControlName="storagePath"
+          />
+          @if (storagePathRef.invalid && (storagePathRef.dirty || storagePathRef.touched)) {
+            <div>
+              @if (editForm.get('storagePath')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              @if (editForm.get('storagePath')?.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '500' }"
+                  >This field cannot be longer than 500 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_fileSize" jhiTranslate="fgrKnowYourCustomerApp.kycDocument.fileSize">File Size</label>
+          <input type="number" class="form-control" name="fileSize" id="field_fileSize" data-cy="fileSize" formControlName="fileSize" />
+        </div>
+
+        @let uploadedAtRef = editForm.get('uploadedAt')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_uploadedAt" jhiTranslate="fgrKnowYourCustomerApp.kycDocument.uploadedAt">Uploaded At</label>
+          <div class="d-flex">
+            <input
+              id="field_uploadedAt"
+              data-cy="uploadedAt"
+              type="datetime-local"
+              class="form-control"
+              name="uploadedAt"
+              formControlName="uploadedAt"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (uploadedAtRef.invalid && (uploadedAtRef.dirty || uploadedAtRef.touched)) {
+            <div>
+              @if (editForm.get('uploadedAt')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('uploadedAt')?.errors?.datetimelocal"
+                jhiTranslate="entity.validation.datetimelocal"
+                >This field should be a date and time.</small
+              >
+            </div>
+          }
+        </div>
+
+        @let expiresAtRef = editForm.get('expiresAt')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_expiresAt" jhiTranslate="fgrKnowYourCustomerApp.kycDocument.expiresAt">Expires At</label>
+          <div class="d-flex">
+            <input
+              id="field_expiresAt"
+              data-cy="expiresAt"
+              type="datetime-local"
+              class="form-control"
+              name="expiresAt"
+              formControlName="expiresAt"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (expiresAtRef.invalid && (expiresAtRef.dirty || expiresAtRef.touched)) {
+            <div>
+              @if (editForm.get('expiresAt')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('expiresAt')?.errors?.datetimelocal"
+                jhiTranslate="entity.validation.datetimelocal"
+                >This field should be a date and time.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_deleted" jhiTranslate="fgrKnowYourCustomerApp.kycDocument.deleted">Deleted</label>
+          <input type="checkbox" class="form-check" name="deleted" id="field_deleted" data-cy="deleted" formControlName="deleted" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_deletedAt" jhiTranslate="fgrKnowYourCustomerApp.kycDocument.deletedAt">Deleted At</label>
+          <div class="d-flex">
+            <input
+              id="field_deletedAt"
+              data-cy="deletedAt"
+              type="datetime-local"
+              class="form-control"
+              name="deletedAt"
+              formControlName="deletedAt"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_metadata" jhiTranslate="fgrKnowYourCustomerApp.kycDocument.metadata">Metadata</label>
+          <textarea class="form-control" name="metadata" id="field_metadata" data-cy="metadata" formControlName="metadata"></textarea>
+        </div>
+
+        @let checksumRef = editForm.get('checksum')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_checksum" jhiTranslate="fgrKnowYourCustomerApp.kycDocument.checksum">Checksum</label>
+          <input type="text" class="form-control" name="checksum" id="field_checksum" data-cy="checksum" formControlName="checksum" />
+          @if (checksumRef.invalid && (checksumRef.dirty || checksumRef.touched)) {
+            <div>
+              @if (editForm.get('checksum')?.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '64' }"
+                  >This field cannot be longer than 64 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_kycCase" jhiTranslate="fgrKnowYourCustomerApp.kycDocument.kycCase">Kyc Case</label>
+          <select
+            class="form-control"
+            id="field_kycCase"
+            data-cy="kycCase"
+            name="kycCase"
+            formControlName="kycCase"
+            [compareWith]="compareKycCase"
+          >
+            <option [ngValue]="null"></option>
+            @for (kycCaseOption of kycCasesSharedCollection(); track $index) {
+              <option [ngValue]="kycCaseOption">{{ kycCaseOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

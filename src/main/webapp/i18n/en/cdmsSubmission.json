@@ -1,0 +1,33 @@
+{
+  "fgrKnowYourCustomerApp": {
+    "cdmsSubmission": {
+      "home": {
+        "title": "Cdms Submissions",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Cdms Submission",
+        "createOrEditLabel": "Create or edit a Cdms Submission",
+        "notFound": "No Cdms Submissions found"
+      },
+      "created": "A new Cdms Submission is created with identifier {{ param }}",
+      "updated": "A Cdms Submission is updated with identifier {{ param }}",
+      "deleted": "A Cdms Submission is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Cdms Submission {{ id }}?"
+      },
+      "detail": {
+        "title": "Cdms Submission"
+      },
+      "id": "ID",
+      "submissionRef": "Submission Ref",
+      "status": "Status",
+      "responseCode": "Response Code",
+      "responseMessage": "Response Message",
+      "attempts": "Attempts",
+      "submittedAt": "Submitted At",
+      "lastAttemptAt": "Last Attempt At",
+      "nextRetryAt": "Next Retry At",
+      "cdmsCustomerId": "Cdms Customer Id",
+      "kycCase": "Kyc Case"
+    }
+  }
+}

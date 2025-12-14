@@ -1,0 +1,30 @@
+{
+  "fgrKnowYourCustomerApp": {
+    "kycNotification": {
+      "home": {
+        "title": "Kyc Notifications",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Kyc Notification",
+        "createOrEditLabel": "Create or edit a Kyc Notification",
+        "notFound": "No Kyc Notifications found"
+      },
+      "created": "A new Kyc Notification is created with identifier {{ param }}",
+      "updated": "A Kyc Notification is updated with identifier {{ param }}",
+      "deleted": "A Kyc Notification is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Kyc Notification {{ id }}?"
+      },
+      "detail": {
+        "title": "Kyc Notification"
+      },
+      "id": "ID",
+      "notificationType": "Notification Type",
+      "message": "Message",
+      "sentAt": "Sent At",
+      "delivered": "Delivered",
+      "deliveredAt": "Delivered At",
+      "errorMessage": "Error Message",
+      "kycCase": "Kyc Case"
+    }
+  }
+}

@@ -1,0 +1,232 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-cdms-submission-heading"
+        data-cy="CdmsSubmissionCreateUpdateHeading"
+        jhiTranslate="fgrKnowYourCustomerApp.cdmsSubmission.home.createOrEditLabel"
+      >
+        Create or edit a Cdms Submission
+      </h2>
+
+      <div>
+        <jhi-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" jhiTranslate="fgrKnowYourCustomerApp.cdmsSubmission.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let submissionRefRef = editForm.get('submissionRef')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_submissionRef" jhiTranslate="fgrKnowYourCustomerApp.cdmsSubmission.submissionRef"
+            >Submission Ref</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="submissionRef"
+            id="field_submissionRef"
+            data-cy="submissionRef"
+            formControlName="submissionRef"
+          />
+          @if (submissionRefRef.invalid && (submissionRefRef.dirty || submissionRefRef.touched)) {
+            <div>
+              @if (editForm.get('submissionRef')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let statusRef = editForm.get('status')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_status" jhiTranslate="fgrKnowYourCustomerApp.cdmsSubmission.status">Status</label>
+          <select class="form-control" name="status" formControlName="status" id="field_status" data-cy="status">
+            <option [ngValue]="null">{{ 'fgrKnowYourCustomerApp.SubmissionStatus.null' | translate }}</option>
+            @for (submissionStatus of submissionStatusValues; track $index) {
+              <option [value]="submissionStatus">{{ 'fgrKnowYourCustomerApp.SubmissionStatus.' + submissionStatus | translate }}</option>
+            }
+          </select>
+          @if (statusRef.invalid && (statusRef.dirty || statusRef.touched)) {
+            <div>
+              @if (editForm.get('status')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let responseCodeRef = editForm.get('responseCode')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_responseCode" jhiTranslate="fgrKnowYourCustomerApp.cdmsSubmission.responseCode"
+            >Response Code</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="responseCode"
+            id="field_responseCode"
+            data-cy="responseCode"
+            formControlName="responseCode"
+          />
+          @if (responseCodeRef.invalid && (responseCodeRef.dirty || responseCodeRef.touched)) {
+            <div>
+              @if (editForm.get('responseCode')?.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '50' }"
+                  >This field cannot be longer than 50 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let responseMessageRef = editForm.get('responseMessage')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_responseMessage" jhiTranslate="fgrKnowYourCustomerApp.cdmsSubmission.responseMessage"
+            >Response Message</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="responseMessage"
+            id="field_responseMessage"
+            data-cy="responseMessage"
+            formControlName="responseMessage"
+          />
+          @if (responseMessageRef.invalid && (responseMessageRef.dirty || responseMessageRef.touched)) {
+            <div>
+              @if (editForm.get('responseMessage')?.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '1000' }"
+                  >This field cannot be longer than 1000 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let attemptsRef = editForm.get('attempts')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_attempts" jhiTranslate="fgrKnowYourCustomerApp.cdmsSubmission.attempts">Attempts</label>
+          <input type="number" class="form-control" name="attempts" id="field_attempts" data-cy="attempts" formControlName="attempts" />
+          @if (attemptsRef.invalid && (attemptsRef.dirty || attemptsRef.touched)) {
+            <div>
+              @if (editForm.get('attempts')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              @if (editForm.get('attempts')?.errors?.min) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.min" [translateValues]="{ min: '0' }"
+                  >This field should be at least 0.</small
+                >
+              }
+              @if (editForm.get('attempts')?.errors?.max) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.max" [translateValues]="{ max: '3' }"
+                  >This field cannot be more than 3.</small
+                >
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('attempts')?.errors?.number"
+                jhiTranslate="entity.validation.number"
+                >This field should be a number.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_submittedAt" jhiTranslate="fgrKnowYourCustomerApp.cdmsSubmission.submittedAt"
+            >Submitted At</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_submittedAt"
+              data-cy="submittedAt"
+              type="datetime-local"
+              class="form-control"
+              name="submittedAt"
+              formControlName="submittedAt"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_lastAttemptAt" jhiTranslate="fgrKnowYourCustomerApp.cdmsSubmission.lastAttemptAt"
+            >Last Attempt At</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_lastAttemptAt"
+              data-cy="lastAttemptAt"
+              type="datetime-local"
+              class="form-control"
+              name="lastAttemptAt"
+              formControlName="lastAttemptAt"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_nextRetryAt" jhiTranslate="fgrKnowYourCustomerApp.cdmsSubmission.nextRetryAt"
+            >Next Retry At</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_nextRetryAt"
+              data-cy="nextRetryAt"
+              type="datetime-local"
+              class="form-control"
+              name="nextRetryAt"
+              formControlName="nextRetryAt"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        @let cdmsCustomerIdRef = editForm.get('cdmsCustomerId')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_cdmsCustomerId" jhiTranslate="fgrKnowYourCustomerApp.cdmsSubmission.cdmsCustomerId"
+            >Cdms Customer Id</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="cdmsCustomerId"
+            id="field_cdmsCustomerId"
+            data-cy="cdmsCustomerId"
+            formControlName="cdmsCustomerId"
+          />
+          @if (cdmsCustomerIdRef.invalid && (cdmsCustomerIdRef.dirty || cdmsCustomerIdRef.touched)) {
+            <div>
+              @if (editForm.get('cdmsCustomerId')?.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '100' }"
+                  >This field cannot be longer than 100 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

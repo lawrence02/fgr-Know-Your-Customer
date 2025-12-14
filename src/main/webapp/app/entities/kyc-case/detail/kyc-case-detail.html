@@ -1,0 +1,109 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (kycCase(); as kycCaseRef) {
+      <div>
+        <h2 data-cy="kycCaseDetailsHeading"><span jhiTranslate="fgrKnowYourCustomerApp.kycCase.detail.title">Kyc Case</span></h2>
+
+        <hr />
+
+        <jhi-alert-error />
+
+        <jhi-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ kycCaseRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.kycCase.kycRef">Kyc Ref</span></dt>
+          <dd>
+            <span>{{ kycCaseRef.kycRef }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.kycCase.status">Status</span></dt>
+          <dd>
+            <span [jhiTranslate]="'fgrKnowYourCustomerApp.KycStatus.' + (kycCaseRef.status ?? 'null')">{{
+              {
+                null: '',
+                STARTED: 'STARTED',
+                IN_PROGRESS: 'IN_PROGRESS',
+                AWAITING_DOCUMENTS: 'AWAITING_DOCUMENTS',
+                SUBMITTED: 'SUBMITTED',
+                APPROVED: 'APPROVED',
+                REJECTED: 'REJECTED',
+                FAILED: 'FAILED',
+                EXPIRED: 'EXPIRED',
+                TIMEOUT: 'TIMEOUT',
+              }[kycCaseRef.status ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.kycCase.channel">Channel</span></dt>
+          <dd>
+            <span [jhiTranslate]="'fgrKnowYourCustomerApp.ChannelType.' + (kycCaseRef.channel ?? 'null')">{{
+              { null: '', WHATSAPP: 'WHATSAPP', WEB: 'WEB', ANDROID: 'ANDROID', IOS: 'IOS', USSD: 'USSD' }[kycCaseRef.channel ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.kycCase.startedAt">Started At</span></dt>
+          <dd>
+            <span>{{ kycCaseRef.startedAt | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.kycCase.lastActivityAt">Last Activity At</span></dt>
+          <dd>
+            <span>{{ kycCaseRef.lastActivityAt | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.kycCase.lastUpdatedAt">Last Updated At</span></dt>
+          <dd>
+            <span>{{ kycCaseRef.lastUpdatedAt | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.kycCase.completedAt">Completed At</span></dt>
+          <dd>
+            <span>{{ kycCaseRef.completedAt | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.kycCase.expiresAt">Expires At</span></dt>
+          <dd>
+            <span>{{ kycCaseRef.expiresAt | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.kycCase.validationErrors">Validation Errors</span></dt>
+          <dd>
+            <span>{{ kycCaseRef.validationErrors }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.kycCase.internalNotes">Internal Notes</span></dt>
+          <dd>
+            <span>{{ kycCaseRef.internalNotes }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.kycCase.consent">Consent</span></dt>
+          <dd>
+            @if (kycCase()!.consent) {
+              <div>
+                <a [routerLink]="['/kyc-consent', kycCase()!.consent?.id, 'view']">{{ kycCaseRef.consent?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.kycCase.submission">Submission</span></dt>
+          <dd>
+            @if (kycCase()!.submission) {
+              <div>
+                <a [routerLink]="['/cdms-submission', kycCase()!.submission?.id, 'view']">{{ kycCaseRef.submission?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.kycCase.customer">Customer</span></dt>
+          <dd>
+            @if (kycCase()!.customer) {
+              <div>
+                <a [routerLink]="['/customer', kycCase()!.customer?.id, 'view']">{{ kycCaseRef.customer?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/kyc-case', kycCaseRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

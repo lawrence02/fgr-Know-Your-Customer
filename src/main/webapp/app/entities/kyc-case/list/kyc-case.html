@@ -1,0 +1,235 @@
+<div>
+  <h2 id="page-heading" data-cy="KycCaseHeading">
+    <span jhiTranslate="fgrKnowYourCustomerApp.kycCase.home.title">Kyc Cases</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined" />
+        <span jhiTranslate="fgrKnowYourCustomerApp.kycCase.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-kyc-case"
+        [routerLink]="['/kyc-case/new']"
+      >
+        <fa-icon icon="plus" />
+        <span jhiTranslate="fgrKnowYourCustomerApp.kycCase.home.createLabel">Create a new Kyc Case</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error />
+
+  <jhi-alert />
+
+  <jhi-filter [filters]="filters" />
+
+  @if (kycCases().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="fgrKnowYourCustomerApp.kycCase.home.notFound">No Kyc Cases found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="kycRef">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.kycCase.kycRef">Kyc Ref</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="status">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.kycCase.status">Status</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="channel">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.kycCase.channel">Channel</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="startedAt">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.kycCase.startedAt">Started At</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="lastActivityAt">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.kycCase.lastActivityAt">Last Activity At</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="lastUpdatedAt">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.kycCase.lastUpdatedAt">Last Updated At</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="completedAt">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.kycCase.completedAt">Completed At</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="expiresAt">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.kycCase.expiresAt">Expires At</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="validationErrors">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.kycCase.validationErrors">Validation Errors</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="internalNotes">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.kycCase.internalNotes">Internal Notes</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="consent.id">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.kycCase.consent">Consent</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="submission.id">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.kycCase.submission">Submission</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="customer.id">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.kycCase.customer">Customer</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (kycCase of kycCases(); track trackId(kycCase)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/kyc-case', kycCase.id, 'view']">{{ kycCase.id }}</a>
+              </td>
+              <td>{{ kycCase.kycRef }}</td>
+              <td [jhiTranslate]="'fgrKnowYourCustomerApp.KycStatus.' + (kycCase.status ?? 'null')">
+                {{
+                  {
+                    null: '',
+                    STARTED: 'STARTED',
+                    IN_PROGRESS: 'IN_PROGRESS',
+                    AWAITING_DOCUMENTS: 'AWAITING_DOCUMENTS',
+                    SUBMITTED: 'SUBMITTED',
+                    APPROVED: 'APPROVED',
+                    REJECTED: 'REJECTED',
+                    FAILED: 'FAILED',
+                    EXPIRED: 'EXPIRED',
+                    TIMEOUT: 'TIMEOUT',
+                  }[kycCase.status ?? 'null']
+                }}
+              </td>
+              <td [jhiTranslate]="'fgrKnowYourCustomerApp.ChannelType.' + (kycCase.channel ?? 'null')">
+                {{
+                  { null: '', WHATSAPP: 'WHATSAPP', WEB: 'WEB', ANDROID: 'ANDROID', IOS: 'IOS', USSD: 'USSD' }[kycCase.channel ?? 'null']
+                }}
+              </td>
+              <td>{{ kycCase.startedAt | formatMediumDatetime }}</td>
+              <td>{{ kycCase.lastActivityAt | formatMediumDatetime }}</td>
+              <td>{{ kycCase.lastUpdatedAt | formatMediumDatetime }}</td>
+              <td>{{ kycCase.completedAt | formatMediumDatetime }}</td>
+              <td>{{ kycCase.expiresAt | formatMediumDatetime }}</td>
+              <td>{{ kycCase.validationErrors }}</td>
+              <td>{{ kycCase.internalNotes }}</td>
+              <td>
+                @if (kycCase.consent) {
+                  <div>
+                    <a [routerLink]="['/kyc-consent', kycCase.consent.id, 'view']">{{ kycCase.consent.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (kycCase.submission) {
+                  <div>
+                    <a [routerLink]="['/cdms-submission', kycCase.submission.id, 'view']">{{ kycCase.submission.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (kycCase.customer) {
+                  <div>
+                    <a [routerLink]="['/customer', kycCase.customer.id, 'view']">{{ kycCase.customer.id }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/kyc-case', kycCase.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/kyc-case', kycCase.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(kycCase)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (kycCases().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <jhi-item-count [params]="{ page, totalItems, itemsPerPage }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        />
+      </div>
+    </div>
+  }
+</div>

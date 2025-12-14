@@ -1,0 +1,72 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (customer(); as customerRef) {
+      <div>
+        <h2 data-cy="customerDetailsHeading"><span jhiTranslate="fgrKnowYourCustomerApp.customer.detail.title">Customer</span></h2>
+
+        <hr />
+
+        <jhi-alert-error />
+
+        <jhi-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ customerRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.customer.customerRef">Customer Ref</span></dt>
+          <dd>
+            <span>{{ customerRef.customerRef }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.customer.customerType">Customer Type</span></dt>
+          <dd>
+            <span [jhiTranslate]="'fgrKnowYourCustomerApp.CustomerType.' + (customerRef.customerType ?? 'null')">{{
+              { null: '', INDIVIDUAL: 'INDIVIDUAL', COMPANY: 'COMPANY' }[customerRef.customerType ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.customer.fullName">Full Name</span></dt>
+          <dd>
+            <span>{{ customerRef.fullName }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.customer.dateOfBirth">Date Of Birth</span></dt>
+          <dd>
+            <span>{{ customerRef.dateOfBirth | formatMediumDate }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.customer.idNumber">Id Number</span></dt>
+          <dd>
+            <span>{{ customerRef.idNumber }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.customer.registrationNumber">Registration Number</span></dt>
+          <dd>
+            <span>{{ customerRef.registrationNumber }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.customer.address">Address</span></dt>
+          <dd>
+            <span>{{ customerRef.address }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.customer.phoneNumber">Phone Number</span></dt>
+          <dd>
+            <span>{{ customerRef.phoneNumber }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.customer.createdAt">Created At</span></dt>
+          <dd>
+            <span>{{ customerRef.createdAt | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.customer.updatedAt">Updated At</span></dt>
+          <dd>
+            <span>{{ customerRef.updatedAt | formatMediumDatetime }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/customer', customerRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

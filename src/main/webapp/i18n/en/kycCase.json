@@ -1,0 +1,38 @@
+{
+  "fgrKnowYourCustomerApp": {
+    "kycCase": {
+      "home": {
+        "title": "Kyc Cases",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Kyc Case",
+        "createOrEditLabel": "Create or edit a Kyc Case",
+        "notFound": "No Kyc Cases found"
+      },
+      "created": "A new Kyc Case is created with identifier {{ param }}",
+      "updated": "A Kyc Case is updated with identifier {{ param }}",
+      "deleted": "A Kyc Case is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Kyc Case {{ id }}?"
+      },
+      "detail": {
+        "title": "Kyc Case"
+      },
+      "id": "ID",
+      "kycRef": "Kyc Ref",
+      "status": "Status",
+      "channel": "Channel",
+      "startedAt": "Started At",
+      "lastActivityAt": "Last Activity At",
+      "lastUpdatedAt": "Last Updated At",
+      "completedAt": "Completed At",
+      "expiresAt": "Expires At",
+      "validationErrors": "Validation Errors",
+      "internalNotes": "Internal Notes",
+      "consent": "Consent",
+      "submission": "Submission",
+      "kycDocument": "Kyc Document",
+      "kycNotification": "Kyc Notification",
+      "customer": "Customer"
+    }
+  }
+}

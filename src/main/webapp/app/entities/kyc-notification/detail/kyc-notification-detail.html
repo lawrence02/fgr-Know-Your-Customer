@@ -1,0 +1,75 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (kycNotification(); as kycNotificationRef) {
+      <div>
+        <h2 data-cy="kycNotificationDetailsHeading">
+          <span jhiTranslate="fgrKnowYourCustomerApp.kycNotification.detail.title">Kyc Notification</span>
+        </h2>
+
+        <hr />
+
+        <jhi-alert-error />
+
+        <jhi-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ kycNotificationRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.kycNotification.notificationType">Notification Type</span></dt>
+          <dd>
+            <span [jhiTranslate]="'fgrKnowYourCustomerApp.NotificationType.' + (kycNotificationRef.notificationType ?? 'null')">{{
+              {
+                null: '',
+                WELCOME: 'WELCOME',
+                DOCUMENT_RECEIVED: 'DOCUMENT_RECEIVED',
+                SUBMISSION_SUCCESS: 'SUBMISSION_SUCCESS',
+                SUBMISSION_FAILED: 'SUBMISSION_FAILED',
+                VALIDATION_ERROR: 'VALIDATION_ERROR',
+                TIMEOUT_WARNING: 'TIMEOUT_WARNING',
+                HELP_REQUEST: 'HELP_REQUEST',
+              }[kycNotificationRef.notificationType ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.kycNotification.message">Message</span></dt>
+          <dd>
+            <span>{{ kycNotificationRef.message }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.kycNotification.sentAt">Sent At</span></dt>
+          <dd>
+            <span>{{ kycNotificationRef.sentAt | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.kycNotification.delivered">Delivered</span></dt>
+          <dd>
+            <span>{{ kycNotificationRef.delivered }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.kycNotification.deliveredAt">Delivered At</span></dt>
+          <dd>
+            <span>{{ kycNotificationRef.deliveredAt | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.kycNotification.errorMessage">Error Message</span></dt>
+          <dd>
+            <span>{{ kycNotificationRef.errorMessage }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.kycNotification.kycCase">Kyc Case</span></dt>
+          <dd>
+            @if (kycNotification()!.kycCase) {
+              <div>
+                <a [routerLink]="['/kyc-case', kycNotification()!.kycCase?.id, 'view']">{{ kycNotificationRef.kycCase?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/kyc-notification', kycNotificationRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

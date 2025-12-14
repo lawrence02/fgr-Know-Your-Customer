@@ -12,7 +12,18 @@
     <property name="timeType" value="time(6)" dbms="mysql"/>
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20251214103011_added_entity_Customer.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20251214103012_added_entity_CustomerIdentifier.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20251214103013_added_entity_KycCase.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20251214103014_added_entity_KycConsent.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20251214103015_added_entity_KycDocument.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20251214103016_added_entity_CdmsSubmission.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20251214103017_added_entity_KycNotification.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+    <include file="config/liquibase/changelog/20251214103012_added_entity_constraints_CustomerIdentifier.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20251214103013_added_entity_constraints_KycCase.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20251214103015_added_entity_constraints_KycDocument.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20251214103017_added_entity_constraints_KycNotification.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

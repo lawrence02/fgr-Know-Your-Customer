@@ -1,0 +1,16 @@
+{
+  "fgrKnowYourCustomerApp": {
+    "KycStatus": {
+      "null": "",
+      "STARTED": "STARTED",
+      "IN_PROGRESS": "IN_PROGRESS",
+      "AWAITING_DOCUMENTS": "AWAITING_DOCUMENTS",
+      "SUBMITTED": "SUBMITTED",
+      "APPROVED": "APPROVED",
+      "REJECTED": "REJECTED",
+      "FAILED": "FAILED",
+      "EXPIRED": "EXPIRED",
+      "TIMEOUT": "TIMEOUT"
+    }
+  }
+}

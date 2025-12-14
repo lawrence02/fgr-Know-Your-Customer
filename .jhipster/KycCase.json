@@ -1,0 +1,96 @@
+{
+  "annotations": {
+    "changelogDate": "20251214103013"
+  },
+  "applications": ["*"],
+  "documentation": "KYC case tracking for each submission attempt",
+  "fields": [
+    {
+      "fieldName": "kycRef",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique", "pattern"],
+      "fieldValidateRulesPattern": "^FGR[0-9]{8}-[0-9]{3}$"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "KycStatus",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "STARTED,IN_PROGRESS,AWAITING_DOCUMENTS,SUBMITTED,APPROVED,REJECTED,FAILED,EXPIRED,TIMEOUT"
+    },
+    {
+      "fieldName": "channel",
+      "fieldType": "ChannelType",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "WHATSAPP,WEB,ANDROID,IOS,USSD"
+    },
+    {
+      "fieldName": "startedAt",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "lastActivityAt",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "lastUpdatedAt",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "completedAt",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "expiresAt",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "validationErrors",
+      "fieldType": "TextBlob"
+    },
+    {
+      "fieldName": "internalNotes",
+      "fieldType": "TextBlob"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "KycCase",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "kycConsent",
+      "relationshipName": "consent",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "cdmsSubmission",
+      "relationshipName": "submission",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "kycDocument",
+      "otherEntityRelationshipName": "kycCase",
+      "relationshipName": "kycDocument",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "kycNotification",
+      "otherEntityRelationshipName": "kycCase",
+      "relationshipName": "kycNotification",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "customer",
+      "relationshipName": "customer",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

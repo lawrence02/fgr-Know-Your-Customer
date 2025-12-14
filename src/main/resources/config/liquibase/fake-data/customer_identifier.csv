@@ -1,0 +1,11 @@
+id;identifier_type;identifier_value;channel;verified;is_primary;created_at;verified_at
+1;NATIONAL_ID;er yahoo;IOS;true;false;2025-12-13T17:37:15;2025-12-13T10:47:35
+2;NATIONAL_ID;insecure sneak;USSD;false;true;2025-12-14T10:16:54;2025-12-14T07:51:47
+3;USERNAME;who consign;WHATSAPP;false;false;2025-12-13T16:58:20;2025-12-14T07:16:48
+4;PASSPORT;righteously;IOS;false;true;2025-12-14T00:34:37;2025-12-14T07:50:41
+5;PHONE_NUMBER;gadzooks;WHATSAPP;true;true;2025-12-13T21:23:24;2025-12-14T00:03:45
+6;PHONE_NUMBER;fiercely;WEB;false;false;2025-12-13T14:26:14;2025-12-13T13:57:38
+7;EMAIL;frenetically now along;IOS;true;true;2025-12-14T05:23:20;2025-12-14T09:14:38
+8;COMPANY_REGISTRATION;agile shy across;WEB;false;false;2025-12-14T06:13:35;2025-12-13T12:38:22
+9;PHONE_NUMBER;obvious;WEB;true;true;2025-12-13T17:33:26;2025-12-14T04:30:06
+10;USERNAME;throughout;IOS;true;false;2025-12-13T11:36:47;2025-12-14T09:30:38

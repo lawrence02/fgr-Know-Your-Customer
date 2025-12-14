@@ -1,0 +1,62 @@
+{
+  "annotations": {
+    "changelogDate": "20251214103016"
+  },
+  "applications": ["*"],
+  "documentation": "CDMS API submission tracking",
+  "fields": [
+    {
+      "fieldName": "submissionRef",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "SubmissionStatus",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "PENDING,SUCCESS,FAILED,RETRYING"
+    },
+    {
+      "fieldName": "responseCode",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "50"
+    },
+    {
+      "fieldName": "responseMessage",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "1000"
+    },
+    {
+      "fieldName": "attempts",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required", "min", "max"],
+      "fieldValidateRulesMax": "3",
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "submittedAt",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "lastAttemptAt",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "nextRetryAt",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "cdmsCustomerId",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "100"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "CdmsSubmission",
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

@@ -1,0 +1,53 @@
+{
+  "annotations": {
+    "changelogDate": "20251214103014"
+  },
+  "applications": ["*"],
+  "documentation": "Consent tracking for compliance",
+  "fields": [
+    {
+      "fieldName": "consentText",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "2000"
+    },
+    {
+      "fieldName": "consented",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "consentedAt",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "channel",
+      "fieldType": "ChannelType",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "WHATSAPP,WEB,ANDROID,IOS,USSD"
+    },
+    {
+      "fieldName": "ipAddress",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "45"
+    },
+    {
+      "fieldName": "userAgent",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "500"
+    },
+    {
+      "fieldName": "consentVersion",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "10"
+    }
+  ],
+  "name": "KycConsent",
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

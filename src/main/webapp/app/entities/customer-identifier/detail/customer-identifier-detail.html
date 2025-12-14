@@ -1,0 +1,82 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (customerIdentifier(); as customerIdentifierRef) {
+      <div>
+        <h2 data-cy="customerIdentifierDetailsHeading">
+          <span jhiTranslate="fgrKnowYourCustomerApp.customerIdentifier.detail.title">Customer Identifier</span>
+        </h2>
+
+        <hr />
+
+        <jhi-alert-error />
+
+        <jhi-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ customerIdentifierRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.customerIdentifier.identifierType">Identifier Type</span></dt>
+          <dd>
+            <span [jhiTranslate]="'fgrKnowYourCustomerApp.IdentifierType.' + (customerIdentifierRef.identifierType ?? 'null')">{{
+              {
+                null: '',
+                PHONE_NUMBER: 'PHONE_NUMBER',
+                EMAIL: 'EMAIL',
+                USERNAME: 'USERNAME',
+                NATIONAL_ID: 'NATIONAL_ID',
+                PASSPORT: 'PASSPORT',
+                COMPANY_REGISTRATION: 'COMPANY_REGISTRATION',
+              }[customerIdentifierRef.identifierType ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.customerIdentifier.identifierValue">Identifier Value</span></dt>
+          <dd>
+            <span>{{ customerIdentifierRef.identifierValue }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.customerIdentifier.channel">Channel</span></dt>
+          <dd>
+            <span [jhiTranslate]="'fgrKnowYourCustomerApp.ChannelType.' + (customerIdentifierRef.channel ?? 'null')">{{
+              { null: '', WHATSAPP: 'WHATSAPP', WEB: 'WEB', ANDROID: 'ANDROID', IOS: 'IOS', USSD: 'USSD' }[
+                customerIdentifierRef.channel ?? 'null'
+              ]
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.customerIdentifier.verified">Verified</span></dt>
+          <dd>
+            <span>{{ customerIdentifierRef.verified }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.customerIdentifier.isPrimary">Is Primary</span></dt>
+          <dd>
+            <span>{{ customerIdentifierRef.isPrimary }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.customerIdentifier.createdAt">Created At</span></dt>
+          <dd>
+            <span>{{ customerIdentifierRef.createdAt | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.customerIdentifier.verifiedAt">Verified At</span></dt>
+          <dd>
+            <span>{{ customerIdentifierRef.verifiedAt | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.customerIdentifier.customer">Customer</span></dt>
+          <dd>
+            @if (customerIdentifier()!.customer) {
+              <div>
+                <a [routerLink]="['/customer', customerIdentifier()!.customer?.id, 'view']">{{ customerIdentifierRef.customer?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/customer-identifier', customerIdentifierRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

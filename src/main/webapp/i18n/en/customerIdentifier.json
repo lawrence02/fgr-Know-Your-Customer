@@ -1,0 +1,31 @@
+{
+  "fgrKnowYourCustomerApp": {
+    "customerIdentifier": {
+      "home": {
+        "title": "Customer Identifiers",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Customer Identifier",
+        "createOrEditLabel": "Create or edit a Customer Identifier",
+        "notFound": "No Customer Identifiers found"
+      },
+      "created": "A new Customer Identifier is created with identifier {{ param }}",
+      "updated": "A Customer Identifier is updated with identifier {{ param }}",
+      "deleted": "A Customer Identifier is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Customer Identifier {{ id }}?"
+      },
+      "detail": {
+        "title": "Customer Identifier"
+      },
+      "id": "ID",
+      "identifierType": "Identifier Type",
+      "identifierValue": "Identifier Value",
+      "channel": "Channel",
+      "verified": "Verified",
+      "isPrimary": "Is Primary",
+      "createdAt": "Created At",
+      "verifiedAt": "Verified At",
+      "customer": "Customer"
+    }
+  }
+}

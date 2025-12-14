@@ -1,0 +1,52 @@
+{
+  "annotations": {
+    "changelogDate": "20251214103017"
+  },
+  "applications": ["*"],
+  "documentation": "Notification and communication tracking",
+  "fields": [
+    {
+      "fieldName": "notificationType",
+      "fieldType": "NotificationType",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "WELCOME,DOCUMENT_RECEIVED,SUBMISSION_SUCCESS,SUBMISSION_FAILED,VALIDATION_ERROR,TIMEOUT_WARNING,HELP_REQUEST"
+    },
+    {
+      "fieldName": "message",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "1000"
+    },
+    {
+      "fieldName": "sentAt",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "delivered",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "deliveredAt",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "errorMessage",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "500"
+    }
+  ],
+  "name": "KycNotification",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "kycCase",
+      "relationshipName": "kycCase",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

@@ -1,0 +1,95 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (kycDocument(); as kycDocumentRef) {
+      <div>
+        <h2 data-cy="kycDocumentDetailsHeading">
+          <span jhiTranslate="fgrKnowYourCustomerApp.kycDocument.detail.title">Kyc Document</span>
+        </h2>
+
+        <hr />
+
+        <jhi-alert-error />
+
+        <jhi-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ kycDocumentRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.kycDocument.documentType">Document Type</span></dt>
+          <dd>
+            <span [jhiTranslate]="'fgrKnowYourCustomerApp.DocumentType.' + (kycDocumentRef.documentType ?? 'null')">{{
+              {
+                null: '',
+                NATIONAL_ID: 'NATIONAL_ID',
+                PASSPORT: 'PASSPORT',
+                COMPANY_REGISTRATION: 'COMPANY_REGISTRATION',
+                MINE_LICENSE: 'MINE_LICENSE',
+                PROOF_OF_ADDRESS: 'PROOF_OF_ADDRESS',
+                SELFIE: 'SELFIE',
+                OTHER: 'OTHER',
+              }[kycDocumentRef.documentType ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.kycDocument.fileName">File Name</span></dt>
+          <dd>
+            <span>{{ kycDocumentRef.fileName }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.kycDocument.mimeType">Mime Type</span></dt>
+          <dd>
+            <span>{{ kycDocumentRef.mimeType }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.kycDocument.storagePath">Storage Path</span></dt>
+          <dd>
+            <span>{{ kycDocumentRef.storagePath }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.kycDocument.fileSize">File Size</span></dt>
+          <dd>
+            <span>{{ kycDocumentRef.fileSize }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.kycDocument.uploadedAt">Uploaded At</span></dt>
+          <dd>
+            <span>{{ kycDocumentRef.uploadedAt | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.kycDocument.expiresAt">Expires At</span></dt>
+          <dd>
+            <span>{{ kycDocumentRef.expiresAt | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.kycDocument.deleted">Deleted</span></dt>
+          <dd>
+            <span>{{ kycDocumentRef.deleted }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.kycDocument.deletedAt">Deleted At</span></dt>
+          <dd>
+            <span>{{ kycDocumentRef.deletedAt | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.kycDocument.metadata">Metadata</span></dt>
+          <dd>
+            <span>{{ kycDocumentRef.metadata }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.kycDocument.checksum">Checksum</span></dt>
+          <dd>
+            <span>{{ kycDocumentRef.checksum }}</span>
+          </dd>
+          <dt><span jhiTranslate="fgrKnowYourCustomerApp.kycDocument.kycCase">Kyc Case</span></dt>
+          <dd>
+            @if (kycDocument()!.kycCase) {
+              <div>
+                <a [routerLink]="['/kyc-case', kycDocument()!.kycCase?.id, 'view']">{{ kycDocumentRef.kycCase?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/kyc-document', kycDocumentRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,278 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-kyc-case-heading"
+        data-cy="KycCaseCreateUpdateHeading"
+        jhiTranslate="fgrKnowYourCustomerApp.kycCase.home.createOrEditLabel"
+      >
+        Create or edit a Kyc Case
+      </h2>
+
+      <div>
+        <jhi-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" jhiTranslate="fgrKnowYourCustomerApp.kycCase.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let kycRefRef = editForm.get('kycRef')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_kycRef" jhiTranslate="fgrKnowYourCustomerApp.kycCase.kycRef">Kyc Ref</label>
+          <input type="text" class="form-control" name="kycRef" id="field_kycRef" data-cy="kycRef" formControlName="kycRef" />
+          @if (kycRefRef.invalid && (kycRefRef.dirty || kycRefRef.touched)) {
+            <div>
+              @if (editForm.get('kycRef')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              @if (editForm.get('kycRef')?.errors?.pattern) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.pattern" [translateValues]="{ pattern: 'Kyc Ref' }"
+                  >This field should follow pattern for Kyc Ref.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let statusRef = editForm.get('status')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_status" jhiTranslate="fgrKnowYourCustomerApp.kycCase.status">Status</label>
+          <select class="form-control" name="status" formControlName="status" id="field_status" data-cy="status">
+            <option [ngValue]="null">{{ 'fgrKnowYourCustomerApp.KycStatus.null' | translate }}</option>
+            @for (kycStatus of kycStatusValues; track $index) {
+              <option [value]="kycStatus">{{ 'fgrKnowYourCustomerApp.KycStatus.' + kycStatus | translate }}</option>
+            }
+          </select>
+          @if (statusRef.invalid && (statusRef.dirty || statusRef.touched)) {
+            <div>
+              @if (editForm.get('status')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let channelRef = editForm.get('channel')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_channel" jhiTranslate="fgrKnowYourCustomerApp.kycCase.channel">Channel</label>
+          <select class="form-control" name="channel" formControlName="channel" id="field_channel" data-cy="channel">
+            <option [ngValue]="null">{{ 'fgrKnowYourCustomerApp.ChannelType.null' | translate }}</option>
+            @for (channelType of channelTypeValues; track $index) {
+              <option [value]="channelType">{{ 'fgrKnowYourCustomerApp.ChannelType.' + channelType | translate }}</option>
+            }
+          </select>
+          @if (channelRef.invalid && (channelRef.dirty || channelRef.touched)) {
+            <div>
+              @if (editForm.get('channel')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let startedAtRef = editForm.get('startedAt')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_startedAt" jhiTranslate="fgrKnowYourCustomerApp.kycCase.startedAt">Started At</label>
+          <div class="d-flex">
+            <input
+              id="field_startedAt"
+              data-cy="startedAt"
+              type="datetime-local"
+              class="form-control"
+              name="startedAt"
+              formControlName="startedAt"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (startedAtRef.invalid && (startedAtRef.dirty || startedAtRef.touched)) {
+            <div>
+              @if (editForm.get('startedAt')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('startedAt')?.errors?.datetimelocal"
+                jhiTranslate="entity.validation.datetimelocal"
+                >This field should be a date and time.</small
+              >
+            </div>
+          }
+        </div>
+
+        @let lastActivityAtRef = editForm.get('lastActivityAt')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_lastActivityAt" jhiTranslate="fgrKnowYourCustomerApp.kycCase.lastActivityAt"
+            >Last Activity At</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_lastActivityAt"
+              data-cy="lastActivityAt"
+              type="datetime-local"
+              class="form-control"
+              name="lastActivityAt"
+              formControlName="lastActivityAt"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (lastActivityAtRef.invalid && (lastActivityAtRef.dirty || lastActivityAtRef.touched)) {
+            <div>
+              @if (editForm.get('lastActivityAt')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('lastActivityAt')?.errors?.datetimelocal"
+                jhiTranslate="entity.validation.datetimelocal"
+                >This field should be a date and time.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_lastUpdatedAt" jhiTranslate="fgrKnowYourCustomerApp.kycCase.lastUpdatedAt"
+            >Last Updated At</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_lastUpdatedAt"
+              data-cy="lastUpdatedAt"
+              type="datetime-local"
+              class="form-control"
+              name="lastUpdatedAt"
+              formControlName="lastUpdatedAt"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_completedAt" jhiTranslate="fgrKnowYourCustomerApp.kycCase.completedAt">Completed At</label>
+          <div class="d-flex">
+            <input
+              id="field_completedAt"
+              data-cy="completedAt"
+              type="datetime-local"
+              class="form-control"
+              name="completedAt"
+              formControlName="completedAt"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_expiresAt" jhiTranslate="fgrKnowYourCustomerApp.kycCase.expiresAt">Expires At</label>
+          <div class="d-flex">
+            <input
+              id="field_expiresAt"
+              data-cy="expiresAt"
+              type="datetime-local"
+              class="form-control"
+              name="expiresAt"
+              formControlName="expiresAt"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_validationErrors" jhiTranslate="fgrKnowYourCustomerApp.kycCase.validationErrors"
+            >Validation Errors</label
+          >
+          <textarea
+            class="form-control"
+            name="validationErrors"
+            id="field_validationErrors"
+            data-cy="validationErrors"
+            formControlName="validationErrors"
+          ></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_internalNotes" jhiTranslate="fgrKnowYourCustomerApp.kycCase.internalNotes"
+            >Internal Notes</label
+          >
+          <textarea
+            class="form-control"
+            name="internalNotes"
+            id="field_internalNotes"
+            data-cy="internalNotes"
+            formControlName="internalNotes"
+          ></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_consent" jhiTranslate="fgrKnowYourCustomerApp.kycCase.consent">Consent</label>
+          <select
+            class="form-control"
+            id="field_consent"
+            data-cy="consent"
+            name="consent"
+            formControlName="consent"
+            [compareWith]="compareKycConsent"
+          >
+            <option [ngValue]="null"></option>
+            @for (kycConsentOption of consentsCollection(); track $index) {
+              <option [ngValue]="kycConsentOption">{{ kycConsentOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_submission" jhiTranslate="fgrKnowYourCustomerApp.kycCase.submission">Submission</label>
+          <select
+            class="form-control"
+            id="field_submission"
+            data-cy="submission"
+            name="submission"
+            formControlName="submission"
+            [compareWith]="compareCdmsSubmission"
+          >
+            <option [ngValue]="null"></option>
+            @for (cdmsSubmissionOption of submissionsCollection(); track $index) {
+              <option [ngValue]="cdmsSubmissionOption">{{ cdmsSubmissionOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_customer" jhiTranslate="fgrKnowYourCustomerApp.kycCase.customer">Customer</label>
+          <select
+            class="form-control"
+            id="field_customer"
+            data-cy="customer"
+            name="customer"
+            formControlName="customer"
+            [compareWith]="compareCustomer"
+          >
+            <option [ngValue]="null"></option>
+            @for (customerOption of customersSharedCollection(); track $index) {
+              <option [ngValue]="customerOption">{{ customerOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

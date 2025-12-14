@@ -1,0 +1,162 @@
+<div>
+  <h2 id="page-heading" data-cy="CdmsSubmissionHeading">
+    <span jhiTranslate="fgrKnowYourCustomerApp.cdmsSubmission.home.title">Cdms Submissions</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined" />
+        <span jhiTranslate="fgrKnowYourCustomerApp.cdmsSubmission.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-cdms-submission"
+        [routerLink]="['/cdms-submission/new']"
+      >
+        <fa-icon icon="plus" />
+        <span jhiTranslate="fgrKnowYourCustomerApp.cdmsSubmission.home.createLabel">Create a new Cdms Submission</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error />
+
+  <jhi-alert />
+
+  @if (cdmsSubmissions().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="fgrKnowYourCustomerApp.cdmsSubmission.home.notFound">No Cdms Submissions found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="submissionRef">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.cdmsSubmission.submissionRef">Submission Ref</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="status">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.cdmsSubmission.status">Status</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="responseCode">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.cdmsSubmission.responseCode">Response Code</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="responseMessage">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.cdmsSubmission.responseMessage">Response Message</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="attempts">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.cdmsSubmission.attempts">Attempts</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="submittedAt">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.cdmsSubmission.submittedAt">Submitted At</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="lastAttemptAt">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.cdmsSubmission.lastAttemptAt">Last Attempt At</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="nextRetryAt">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.cdmsSubmission.nextRetryAt">Next Retry At</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="cdmsCustomerId">
+              <div class="d-flex">
+                <span jhiTranslate="fgrKnowYourCustomerApp.cdmsSubmission.cdmsCustomerId">Cdms Customer Id</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (cdmsSubmission of cdmsSubmissions(); track trackId(cdmsSubmission)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/cdms-submission', cdmsSubmission.id, 'view']">{{ cdmsSubmission.id }}</a>
+              </td>
+              <td>{{ cdmsSubmission.submissionRef }}</td>
+              <td [jhiTranslate]="'fgrKnowYourCustomerApp.SubmissionStatus.' + (cdmsSubmission.status ?? 'null')">
+                {{
+                  { null: '', PENDING: 'PENDING', SUCCESS: 'SUCCESS', FAILED: 'FAILED', RETRYING: 'RETRYING' }[
+                    cdmsSubmission.status ?? 'null'
+                  ]
+                }}
+              </td>
+              <td>{{ cdmsSubmission.responseCode }}</td>
+              <td>{{ cdmsSubmission.responseMessage }}</td>
+              <td>{{ cdmsSubmission.attempts }}</td>
+              <td>{{ cdmsSubmission.submittedAt | formatMediumDatetime }}</td>
+              <td>{{ cdmsSubmission.lastAttemptAt | formatMediumDatetime }}</td>
+              <td>{{ cdmsSubmission.nextRetryAt | formatMediumDatetime }}</td>
+              <td>{{ cdmsSubmission.cdmsCustomerId }}</td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a
+                    [routerLink]="['/cdms-submission', cdmsSubmission.id, 'view']"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a
+                    [routerLink]="['/cdms-submission', cdmsSubmission.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(cdmsSubmission)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>
