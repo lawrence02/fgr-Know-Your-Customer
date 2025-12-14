@@ -1,0 +1,207 @@
+/**
+ * =========================
+ * ENUMS
+ * =========================
+ */
+enum CustomerType {
+  INDIVIDUAL,
+  COMPANY
+}
+
+enum IdentifierType {
+  PHONE_NUMBER,
+  EMAIL,
+  USERNAME,
+  NATIONAL_ID,
+  PASSPORT,
+  COMPANY_REGISTRATION
+}
+
+enum ChannelType {
+  WHATSAPP,
+  WEB,
+  ANDROID,
+  IOS,
+  USSD
+}
+
+enum KycStatus {
+  STARTED,
+  IN_PROGRESS,
+  AWAITING_DOCUMENTS,
+  SUBMITTED,
+  APPROVED,
+  REJECTED,
+  FAILED,
+  EXPIRED,
+  TIMEOUT
+}
+
+enum DocumentType {
+  NATIONAL_ID,
+  PASSPORT,
+  COMPANY_REGISTRATION,
+  MINE_LICENSE,
+  PROOF_OF_ADDRESS,
+  SELFIE,
+  OTHER
+}
+
+enum SubmissionStatus {
+  PENDING,
+  SUCCESS,
+  FAILED,
+  RETRYING
+}
+
+enum NotificationType {
+  WELCOME,
+  DOCUMENT_RECEIVED,
+  SUBMISSION_SUCCESS,
+  SUBMISSION_FAILED,
+  VALIDATION_ERROR,
+  TIMEOUT_WARNING,
+  HELP_REQUEST
+}
+
+/**
+ * =========================
+ * ENTITIES
+ * =========================
+ */
+
+/**
+ * Customer entity - represents miners and gold buying agents
+ */
+entity Customer {
+  customerRef String required unique pattern(/^FGR-CUST-[0-9]{8}$/)
+  customerType CustomerType required
+  fullName String required maxlength(255)
+  dateOfBirth LocalDate
+  idNumber String maxlength(50)
+  registrationNumber String maxlength(100)
+  address String maxlength(500)
+  phoneNumber String maxlength(20)
+  createdAt Instant required
+  updatedAt Instant
+}
+
+/**
+ * Customer identifiers across different channels
+ */
+entity CustomerIdentifier {
+  identifierType IdentifierType required
+  identifierValue String required maxlength(255)
+  channel ChannelType required
+  verified Boolean required
+  isPrimary Boolean
+  createdAt Instant required
+  verifiedAt Instant
+}
+
+/**
+ * KYC case tracking for each submission attempt
+ */
+entity KycCase {
+  kycRef String required unique pattern(/^FGR[0-9]{8}-[0-9]{3}$/)
+  status KycStatus required
+  channel ChannelType required
+  startedAt Instant required
+  lastActivityAt Instant required
+  lastUpdatedAt Instant
+  completedAt Instant
+  expiresAt Instant
+  validationErrors TextBlob
+  internalNotes TextBlob
+}
+
+/**
+ * Consent tracking for compliance
+ */
+entity KycConsent {
+  consentText String required maxlength(2000)
+  consented Boolean required
+  consentedAt Instant required
+  channel ChannelType required
+  ipAddress String maxlength(45)
+  userAgent String maxlength(500)
+  consentVersion String maxlength(10)
+}
+
+/**
+ * Document storage and tracking
+ */
+entity KycDocument {
+  documentType DocumentType required
+  fileName String required maxlength(255)
+  mimeType String required maxlength(100)
+  storagePath String required maxlength(500)
+  fileSize Long
+  uploadedAt Instant required
+  expiresAt Instant required
+  deleted Boolean
+  deletedAt Instant
+  metadata TextBlob
+  checksum String maxlength(64)
+}
+
+/**
+ * CDMS API submission tracking
+ */
+entity CdmsSubmission {
+  submissionRef String required unique
+  status SubmissionStatus required
+  responseCode String maxlength(50)
+  responseMessage String maxlength(1000)
+  attempts Integer required min(0) max(3)
+  submittedAt Instant
+  lastAttemptAt Instant
+  nextRetryAt Instant
+  cdmsCustomerId String maxlength(100)
+}
+
+/**
+ * Notification and communication tracking
+ */
+entity KycNotification {
+  notificationType NotificationType required
+  message String required maxlength(1000)
+  sentAt Instant required
+  delivered Boolean
+  deliveredAt Instant
+  errorMessage String maxlength(500)
+}
+
+/**
+ * =========================
+ * RELATIONSHIPS
+ * =========================
+ */
+
+relationship OneToMany {
+  Customer to CustomerIdentifier{customer}
+  Customer to KycCase{customer}
+  KycCase to KycDocument{kycCase}
+  KycCase to KycNotification{kycCase}
+}
+
+relationship OneToOne {
+  KycCase{consent} to KycConsent
+  KycCase{submission} to CdmsSubmission
+}
+
+/**
+ * =========================
+ * JHIPSTER OPTIONS
+ * =========================
+ */
+
+service * with serviceClass
+paginate Customer, CustomerIdentifier, KycCase, KycDocument, KycNotification with pagination
+filter Customer, KycCase, CdmsSubmission, CustomerIdentifier
+
+// Microservice configuration (optional)
+// microservice * with kycService
+
+// Search configuration (optional)
+// search Customer, KycCase with elasticsearch
